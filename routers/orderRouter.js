@@ -5,13 +5,9 @@ import User from "../models/userModel.js";
 import Service from "../models/serviceModel.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import {
-  isAdmin,
-  isAuth,
-  isSellerOrAdmin,
-  //mailgun,
-  //payOrderEmailTemplate,
-} from "../utils.js";
+import webpush from "web-push";
+import axios from "axios";
+import { isAdmin, isAuth, isSellerOrAdmin } from "../utils.js";
 import Turn from "../models/turnModel.js";
 
 dotenv.config();
@@ -169,6 +165,25 @@ orderRouter.put("/:id/pay", async (req, res) => {
       const turn = await Turn.findById(order.turnId);
       console.log("turno pagado", turn);
 
+      // ----------- Envio por WHATSAPP ----------------------
+
+      try {
+        const sendWhatsApp = await axios.post(
+          // "http://localhost:3001/received",
+          "https://sendmessagewhatsapp.herokuapp.com/received",
+          {
+            body: {
+              // from: "573128596420@c.us",
+              // body: "servicio solicitado",
+              from: "57" + seller.phone + "@c.us",
+              body: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}`,
+            },
+          }
+        );
+      } catch (error) {
+        console.log("este es el error", error);
+      }
+
       // *-------Envio Norificacion Push-----------
 
       const payload = JSON.stringify({
@@ -188,25 +203,6 @@ orderRouter.put("/:id/pay", async (req, res) => {
       } catch (error) {
         console.log("No se pudo enviar la notificacion", error);
         res.status(400).send(error).json();
-      }
-
-      // ----------- Envio por WHATSAPP ----------------------
-
-      try {
-        const sendWhatsApp = await axios.post(
-          // "http://localhost:3001/received",
-          "https://sendmessagewhatsapp.herokuapp.com/received",
-          {
-            body: {
-              // from: "573128596420@c.us",
-              // body: "servicio solicitado",
-              from: "57" + seller.phone + "@c.us",
-              body: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}`,
-            },
-          }
-        );
-      } catch (error) {
-        console.log("este es el error", error);
       }
 
       // const transporter = nodemailer.createTransport({
