@@ -132,7 +132,6 @@ orderRouter.put("/:id/pay", async (req, res) => {
       "email name"
     );
 
-    console.log("order pagada", order);
     if (order) {
       order.isPaid = true;
       order.paidAt = Date.now();
@@ -160,10 +159,8 @@ orderRouter.put("/:id/pay", async (req, res) => {
       await userFather.save();
 
       const seller = await User.findById(order.seller);
-      console.log("seller a notificar", seller);
 
       const turn = await Turn.findById(order.turnId);
-      console.log("turno pagado", turn);
 
       // ----------- Envio por WHATSAPP ----------------------
 
@@ -176,7 +173,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
               // from: "573128596420@c.us",
               // body: "servicio solicitado",
               from: "57" + seller.phone + "@c.us",
-              body: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode},<br/> recuerde marcarlo como realizado una vez finalice la actividad`,
+              body: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}, recuerde marcarlo como realizado una vez finalice la actividad`,
             },
           }
         );

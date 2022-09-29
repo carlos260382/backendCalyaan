@@ -83,7 +83,6 @@ turnRouter.post(
           const userSeller = await User.find({
             isSeller: true,
           });
-          console.log("userSeller", userSeller);
 
           // ----------SEND WHATSAPP ------------
 
@@ -149,7 +148,6 @@ turnRouter.put(
     // console.log("el turno q llega body", req.body.Turn);
     // console.log("el turno q llega params", req.params);
     if (turn) {
-      console.log("el turno aceptado", turn);
       turn.status = true;
 
       const updatedTurn = await turn.save();
