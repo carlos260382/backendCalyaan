@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import User from "../models/userModel.js";
-import Subscription from "../models/subscriptions.js";
+
 import { generateToken, isAdmin, isAuth, random } from "../utils.js";
 import webpush from "web-push";
 dotenv.config();
