@@ -264,6 +264,33 @@ orderRouter.put(
 
       const updatedOrder = await order.save();
       res.send({ message: "Order Delivered", order: updatedOrder });
+
+      // *-------Envio Norificacion Push-----------
+
+      if (createdTurn) {
+        const userAdmin = await User.find({
+          isAdmin: true,
+        });
+
+        const payload = JSON.stringify({
+          title: "Servicio Realizado",
+          message: `Fue realizado el servicio ${order.orderItems[0].name}`,
+          vibrate: [100, 50, 100],
+        });
+
+        try {
+          await webpush.setVapidDetails(
+            "mailto:andres260382@gmail.com",
+            process.env.PUBLIC_API_KEY_WEBPUSH,
+            process.env.PRIVATE_API_KEY_WEBPUSH
+          );
+          await webpush.sendNotification(userAdmin.subscription, payload);
+          // res.status(200).json();
+        } catch (error) {
+          console.log("No se pudo enviar la notificacion", error);
+          res.status(400).send(error).json();
+        }
+      }
     } else {
       res.status(404).send({ message: "Order Not Found" });
     }

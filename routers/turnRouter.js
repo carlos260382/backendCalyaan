@@ -84,7 +84,6 @@ turnRouter.post(
             isSeller: true,
           });
           console.log("userSeller", userSeller);
-          // const subscription = await Subscription.find();
 
           // ----------SEND WHATSAPP ------------
 
@@ -98,7 +97,7 @@ turnRouter.post(
                     // from: "573128596420@c.us",
                     // body: "servicio solicitado",
                     from: "57" + userSeller[i].phone + "@c.us",
-                    body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la aplicación en la sesión "Turnos" https://calyaanwp.netlify.app`,
+                    body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos" https://calyaanwp.netlify.app`,
                   },
                 }
               );
@@ -147,8 +146,8 @@ turnRouter.put(
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const turn = await Turn.findById(req.params.id);
-    console.log("el turno q llega body", req.body.Turn);
-    console.log("el turno q llega params", req.params);
+    // console.log("el turno q llega body", req.body.Turn);
+    // console.log("el turno q llega params", req.params);
     if (turn) {
       console.log("el turno aceptado", turn);
       turn.status = true;
@@ -167,7 +166,7 @@ turnRouter.put(
           Order: updatedOrder,
         });
       }
-      console.log("order modifi", order);
+      // console.log("order modifi", order);
 
       // ----------- Envio por WHATSAPP ----------------------
 
@@ -204,10 +203,10 @@ turnRouter.put(
         from: "Remitente",
         to: turn.emailUser,
         subject: "Turno Aceptado",
-        text: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede realizar el pago para confirmar el pedido`,
+        text: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.Turn.name}, puede realizar el pago para confirmar el pedido`,
         html: `
-              <p>¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede realizar el pago para confirmar el pedido</p>
-              <img src=${req.body.img} width: "10" height: "10">
+              <p>¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.Turn.name}, puede realizar el pago para confirmar el pedido</p>
+              <img src=${req.body.Turn.img} width: "10" height: "10">
               `,
       };
 
@@ -225,7 +224,7 @@ turnRouter.put(
 
       const payload = JSON.stringify({
         title: "Servicio Aprobado",
-        message: `por el profesional ${req.body.name}, en su correo recibira los detalles para realizar el pago`,
+        message: `por el profesional ${req.body.Turn.name}, en su correo recibira los detalles para realizar el pago`,
         vibrate: [100, 50, 100],
       });
 
