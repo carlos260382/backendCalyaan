@@ -180,7 +180,7 @@ turnRouter.put(
               // from: "573128596420@c.us",
               // body: "servicio solicitado",
               from: "57" + turn.phoneUser + "@c.us",
-              body: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.name}, puede realizar el pago para finalizar el pedido`,
+              body: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.Turn.name}, puede realizar el pago para finalizar el pedido`,
             },
           }
         );
