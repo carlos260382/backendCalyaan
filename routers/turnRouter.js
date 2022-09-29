@@ -86,6 +86,27 @@ turnRouter.post(
           console.log("userSeller", userSeller);
           // const subscription = await Subscription.find();
 
+                    // ----------SEND WHATSAPP ------------
+
+                    try {
+                      for (let i = 0; i < userSeller.length; i++) {
+                        const sendWhatsApp = await axios.post(
+                          // "http://localhost:3001/received",
+                          "https://sendmessagewhatsapp.herokuapp.com/received",
+                          {
+                            body: {
+                              // from: "573128596420@c.us",
+                              // body: "servicio solicitado",
+                              from: "57" + userSeller[i].phone + "@c.us",
+                              body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la aplicación en la sesión "Turnos" https://calyaanwp.netlify.app`,
+                            },
+                          }
+                        );
+                      }
+                    } catch (error) {
+                      console.log("este es el error", error);
+                    }
+
           // *-------Envio Norificacion Push-----------
 
           const payload = JSON.stringify({
@@ -112,26 +133,7 @@ turnRouter.post(
             res.status(400).send(error).json();
           }
 
-          // ----------SEND WHATSAPP ------------
 
-          try {
-            for (let i = 0; i < userSeller.length; i++) {
-              const sendWhatsApp = await axios.post(
-                // "http://localhost:3001/received",
-                "https://sendmessagewhatsapp.herokuapp.com/received",
-                {
-                  body: {
-                    // from: "573128596420@c.us",
-                    // body: "servicio solicitado",
-                    from: "57" + userSeller[i].phone + "@c.us",
-                    body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la aplicación en la sesión "Turnos" https://calyaanwp.netlify.app`,
-                  },
-                }
-              );
-            }
-          } catch (error) {
-            console.log("este es el error", error);
-          }
         }
       }
     } catch (error) {
