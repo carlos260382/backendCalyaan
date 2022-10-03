@@ -89,8 +89,9 @@ turnRouter.post(
           try {
             for (let i = 0; i < userSeller.length; i++) {
               const sendWhatsApp = await axios.post(
+                "https://sendwhatsapp2.herokuapp.com/received",
                 // "http://localhost:3001/received",
-                "https://sendmessagewhatsapp.herokuapp.com/received",
+                // "https://sendmessagewhatsapp.herokuapp.com/received",
                 {
                   body: {
                     // from: "573128596420@c.us",
