@@ -151,6 +151,10 @@ turnRouter.put(
       turn.status = true;
 
       const updatedTurn = await turn.save();
+      res.send({
+        message: "Turno Aceptado",
+        Turn: updatedTurn,
+      });
 
       const order = await Order.findById(turn.orderId);
 
@@ -158,12 +162,8 @@ turnRouter.put(
         order.seller = req.body.Turn.seller;
         order.turnId = req.params.id;
         const updatedOrder = await order.save();
-        res.send({
-          message: "Turno Aceptado",
-          Turn: updatedTurn,
-          Order: updatedOrder,
-        });
       }
+
       // console.log("order modifi", order);
 
       // ----------- Envio por WHATSAPP ----------------------
