@@ -233,6 +233,7 @@ turnRouter.put(
           process.env.PRIVATE_API_KEY_WEBPUSH
         );
         await webpush.sendNotification(user.subscription, payload);
+        console.log("Notificación push enviada");
         // res.status(200).json();
       } catch (error) {
         console.log("No se pudo enviar la notificacion", error);
