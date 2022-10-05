@@ -44,7 +44,7 @@ export const isAuth = (req, res, next) => {
 
 export const isAuthTurn = (req, res, next) => {
   const authorization = req.body.headers.Authorization;
-
+  console.log("el req de isAuth", authorization);
   if (authorization) {
     const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
     jwt.verify(

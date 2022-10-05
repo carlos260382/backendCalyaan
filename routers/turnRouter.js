@@ -142,8 +142,7 @@ turnRouter.post(
 
 turnRouter.put(
   "/:id",
-
-  isSellerOrAdmin,
+  isAuthTurn,
   expressAsyncHandler(async (req, res) => {
     const turn = await Turn.findById(req.params.id);
     // console.log("el turno q llega body", req.body.Turn);
