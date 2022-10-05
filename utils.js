@@ -78,6 +78,7 @@ export const isSeller = (req, res, next) => {
   }
 };
 export const isSellerOrAdmin = (req, res, next) => {
+  console.log("el req de issellerOrAdmin", req);
   if (req.user && (req.user.isSeller || req.user.isAdmin)) {
     next();
   } else {
