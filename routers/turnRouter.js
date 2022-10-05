@@ -142,7 +142,7 @@ turnRouter.post(
 
 turnRouter.put(
   "/:id",
-  isAuthTurn,
+
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const turn = await Turn.findById(req.params.id);
