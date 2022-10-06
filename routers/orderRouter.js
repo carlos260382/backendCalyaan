@@ -186,7 +186,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
 
       const payload = JSON.stringify({
         title: "Servicio Confirmado",
-        message: `Fue confirmado el servicio ${order.orderItems[0].name}`,
+        message: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}`,
         vibrate: [100, 50, 100],
       });
 

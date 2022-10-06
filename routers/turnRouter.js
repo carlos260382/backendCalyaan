@@ -103,7 +103,7 @@ turnRouter.post(
               );
             }
           } catch (error) {
-            console.log("este es el error", error);
+            console.log("The message was not sent by whatsapp");
           }
 
           // *-------Envio Norificacion Push-----------
@@ -128,7 +128,7 @@ turnRouter.post(
               // res.status(200).json();
             }
           } catch (error) {
-            console.log("No se pudo enviar la notificacion", error);
+            console.log("The message was not sent by webpush");
             res.status(400).send(error).json();
           }
         }
@@ -184,7 +184,7 @@ turnRouter.put(
           }
         );
       } catch (error) {
-        console.log("este es el error", error);
+        console.log("The message was not sent by whatsapp");
       }
 
       // ---------------> Envio EMAIL---------------------->
@@ -238,7 +238,7 @@ turnRouter.put(
         console.log("Notificación push enviada");
         // res.status(200).json();
       } catch (error) {
-        console.log("No se pudo enviar la notificacion", error);
+        console.log("The message was not sent by whatsapp");
         res.status(400).send(error).json();
       }
     } else {
