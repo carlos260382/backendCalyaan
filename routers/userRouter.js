@@ -92,6 +92,8 @@ userRouter.post(
     const user = new User({
       name: req.body.name,
       email: req.body.email,
+      dateOfBirth: req.body.dateOfBirthl,
+      gender: req.body.gender,
       subscribed: false,
       password: bcrypt.hashSync(req.body.password, 8),
       phone: req.body.phone,
@@ -142,6 +144,8 @@ userRouter.put(
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
+      user.dateOfBirth = req.body.dateOfBirth || user.dateOfBirth;
+      user.gender = req.body.gender || user.gender;
       if (user.isSeller) {
         user.seller.name = req.body.sellerName || user.seller.name;
         user.seller.logo = req.body.sellerLogo || user.seller.logo;
