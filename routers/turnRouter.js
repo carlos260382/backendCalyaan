@@ -250,7 +250,6 @@ turnRouter.put(
 turnRouter.get(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const orderId = req.params.id;
     try {
