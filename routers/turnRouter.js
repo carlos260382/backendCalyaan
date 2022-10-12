@@ -126,6 +126,7 @@ turnRouter.post(
                 payload
               );
               // res.status(200).json();
+              console.log('web push enviado')
             }
           } catch (error) {
             console.log("The message was not sent by webpush");
