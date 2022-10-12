@@ -44,7 +44,7 @@ export const isAuth = (req, res, next) => {
 
 export const isAuthTurn = (req, res, next) => {
   const authorization = req.body.headers.Authorization;
-  console.log("el req de isAuth", authorization);
+
   if (authorization) {
     const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
     jwt.verify(
@@ -78,7 +78,6 @@ export const isSeller = (req, res, next) => {
   }
 };
 export const isSellerOrAdmin = (req, res, next) => {
-  console.log("el req de issellerOrAdmin", req.user);
   if (req.user && (req.user.isSeller || req.user.isAdmin)) {
     next();
   } else {
@@ -210,7 +209,7 @@ export const random = (min, max) => {
 //       port: 465,
 //       secure: true,
 //       auth: {
-//         user: "ep3977752@gmail.com",
+//         user: "calyaan.com@gmail.com",
 //         pass: process.env.KEY_NODEMAILER,
 //       },
 //     });
