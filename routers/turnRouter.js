@@ -131,7 +131,7 @@ turnRouter.post(
             );
 
             if (
-              Object.keys(userSeller[count].subscription.endpoint).length === 0
+              Object.keys(userSeller[count].subscription.endpoint).length === 1
             ) {
               count++;
               continue;
