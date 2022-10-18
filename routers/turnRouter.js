@@ -123,12 +123,12 @@ turnRouter.post(
           while (count <= userSeller.length - 1) {
             //for (let i = 0; i < userSeller.length; i++) {
 
-            console.log("subscription", userSeller[count].subscription);
+            // console.log("subscription", userSeller[count].subscription);
 
-            console.log(
-              "objectKeys",
-              Object.keys(userSeller[count].subscription.endpoint).length
-            );
+            // console.log(
+            //   "objectKeys",
+            //   Object.keys(userSeller[count].subscription.endpoint).length
+            // );
 
             if (
               Object.keys(userSeller[count].subscription.endpoint).length === 1
@@ -146,7 +146,7 @@ turnRouter.post(
                 count++;
               } catch (error) {
                 count++;
-                console.log("The message was not sent by webpush", error);
+                console.log("The message was not sent by webpush");
                 // res.status(400).send(error).json();
               }
             }
@@ -244,23 +244,22 @@ turnRouter.put(
       const user = await User.findById(turn.user);
 
       const payload = JSON.stringify({
-        title: "Servicio Aprobado",
+        title: "Servicio Aceptado",
         message: `por el profesional ${req.body.Turn.name}, en su correo recibira los detalles para realizar el pago`,
         vibrate: [100, 50, 100],
       });
 
-      try {
-        await webpush.setVapidDetails(
-          "mailto:andres260382@gmail.com",
-          process.env.PUBLIC_API_KEY_WEBPUSH,
-          process.env.PRIVATE_API_KEY_WEBPUSH
-        );
-        await webpush.sendNotification(user.subscription, payload);
-        console.log("Notificación push enviada");
-        // res.status(200).json();
-      } catch (error) {
-        console.log("The message was not sent by whatsapp");
-        res.status(400).send(error).json();
+      if (Object.keys(user.subscription.endpoint).length === 1) {
+        return;
+      } else {
+        try {
+          await webpush.sendNotification(user.subscription, payload);
+          // res.status(200).json();
+          console.log("web push enviado");
+        } catch (error) {
+          console.log("The message was not sent by webpush");
+          // res.status(400).send(error).json();
+        }
       }
     } else {
       res.status(404).send({ message: "Turn Not Found" });

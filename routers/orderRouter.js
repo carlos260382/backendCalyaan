@@ -189,18 +189,16 @@ orderRouter.put("/:id/pay", async (req, res) => {
         message: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}`,
         vibrate: [100, 50, 100],
       });
-
+      await webpush.setVapidDetails(
+        "mailto:andres260382@gmail.com",
+        process.env.PUBLIC_API_KEY_WEBPUSH,
+        process.env.PRIVATE_API_KEY_WEBPUSH
+      );
       try {
-        await webpush.setVapidDetails(
-          "mailto:andres260382@gmail.com",
-          process.env.PUBLIC_API_KEY_WEBPUSH,
-          process.env.PRIVATE_API_KEY_WEBPUSH
-        );
         await webpush.sendNotification(seller.subscription, payload);
         // res.status(200).json();
       } catch (error) {
-        console.log("No se pudo enviar la notificacion", error);
-        res.status(400).send(error).json();
+        console.log("No se pudo enviar la notificacion");
       }
 
       // const transporter = nodemailer.createTransport({
