@@ -121,16 +121,21 @@ turnRouter.post(
               process.env.PRIVATE_API_KEY_WEBPUSH
             );
             console.log("subscription", userSeller[i].subscription);
-            try {
-              await webpush.sendNotification(
-                userSeller[i].subscription,
-                payload
-              );
-              // res.status(200).json();
-              console.log("web push enviado");
-            } catch (error) {
-              console.log("The message was not sent by webpush");
-              res.status(400).send(error).json();
+
+            if (Object.keys(userSeller[i].subscription.keys).length === 0) {
+              continue;
+            } else {
+              try {
+                await webpush.sendNotification(
+                  userSeller[i].subscription,
+                  payload
+                );
+                // res.status(200).json();
+                console.log("web push enviado");
+              } catch (error) {
+                console.log("The message was not sent by webpush");
+                res.status(400).send(error).json();
+              }
             }
           }
         }
