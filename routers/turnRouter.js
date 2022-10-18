@@ -97,7 +97,7 @@ turnRouter.post(
                   from: "573128596420@c.us",
                   // body: "servicio solicitado",
                   // from: "57" + userSeller[i].phone + "@c.us",
-                  body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
+                  body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
                 },
               }
             );
@@ -114,23 +114,24 @@ turnRouter.post(
             vibrate: [100, 50, 100],
           });
 
-          try {
-            for (let i = 0; i < userSeller.length; i++) {
-              webpush.setVapidDetails(
-                "mailto:andres260382@gmail.com",
-                process.env.PUBLIC_API_KEY_WEBPUSH,
-                process.env.PRIVATE_API_KEY_WEBPUSH
-              );
+          for (let i = 0; i < userSeller.length; i++) {
+            webpush.setVapidDetails(
+              "mailto:andres260382@gmail.com",
+              process.env.PUBLIC_API_KEY_WEBPUSH,
+              process.env.PRIVATE_API_KEY_WEBPUSH
+            );
+            console.log("subscription", userSeller[i].subscription);
+            try {
               await webpush.sendNotification(
                 userSeller[i].subscription,
                 payload
               );
               // res.status(200).json();
               console.log("web push enviado");
+            } catch (error) {
+              console.log("The message was not sent by webpush");
+              res.status(400).send(error).json();
             }
-          } catch (error) {
-            console.log("The message was not sent by webpush");
-            res.status(400).send(error).json();
           }
         }
       }
