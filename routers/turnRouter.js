@@ -120,19 +120,21 @@ turnRouter.post(
           );
 
           let count = 0;
-          while (count < userSeller.length) {
+          while (count <= userSeller.length - 1) {
             //for (let i = 0; i < userSeller.length; i++) {
 
-            console.log("subscription", userSeller.subscription);
+            console.log("subscription", userSeller[count].subscription);
 
-            if (Object.keys(userSeller.subscription.keys).length === 0) {
-              console.log(Object.keys(userSeller.subscription.keys).length);
+            if (Object.keys(userSeller[count].subscription.keys).length === 0) {
+              console.log(
+                Object.keys(userSeller[count].subscription.keys).length
+              );
               count++;
               continue;
             } else {
               try {
                 await webpush.sendNotification(
-                  userSeller[i].subscription,
+                  userSeller[count].subscription,
                   payload
                 );
                 // res.status(200).json();
