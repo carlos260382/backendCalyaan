@@ -113,16 +113,21 @@ turnRouter.post(
             message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
             vibrate: [100, 50, 100],
           });
+          webpush.setVapidDetails(
+            "mailto:andres260382@gmail.com",
+            process.env.PUBLIC_API_KEY_WEBPUSH,
+            process.env.PRIVATE_API_KEY_WEBPUSH
+          );
 
-          for (let i = 0; i < userSeller.length; i++) {
-            webpush.setVapidDetails(
-              "mailto:andres260382@gmail.com",
-              process.env.PUBLIC_API_KEY_WEBPUSH,
-              process.env.PRIVATE_API_KEY_WEBPUSH
-            );
-            console.log("subscription", userSeller[i].subscription);
+          let count = 0;
+          while (count < userSeller.length) {
+            //for (let i = 0; i < userSeller.length; i++) {
 
-            if (Object.keys(userSeller[i].subscription.keys).length === 0) {
+            console.log("subscription", userSeller.subscription);
+
+            if (Object.keys(userSeller.subscription.keys).length === 0) {
+              console.log(Object.keys(userSeller.subscription.keys).length);
+              count++;
               continue;
             } else {
               try {
@@ -132,6 +137,7 @@ turnRouter.post(
                 );
                 // res.status(200).json();
                 console.log("web push enviado");
+                count++;
               } catch (error) {
                 console.log("The message was not sent by webpush");
                 res.status(400).send(error).json();
@@ -140,6 +146,7 @@ turnRouter.post(
           }
         }
       }
+      //}
     } catch (error) {
       console.log(error);
       res.status(404).alert("turno no fue creado", error);
