@@ -125,10 +125,12 @@ turnRouter.post(
 
             console.log("subscription", userSeller[count].subscription);
 
+            console.log(
+              "objectKeys",
+              Object.keys(userSeller[count].subscription.keys).length
+            );
+
             if (Object.keys(userSeller[count].subscription.keys).length === 0) {
-              console.log(
-                Object.keys(userSeller[count].subscription.keys).length
-              );
               count++;
               continue;
             } else {
