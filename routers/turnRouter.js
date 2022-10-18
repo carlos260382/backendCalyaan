@@ -146,8 +146,8 @@ turnRouter.post(
                 count++;
               } catch (error) {
                 count++;
-                console.log("The message was not sent by webpush");
-                res.status(400).send(error).json();
+                console.log("The message was not sent by webpush", error);
+                // res.status(400).send(error).json();
               }
             }
           }
