@@ -89,14 +89,14 @@ turnRouter.post(
           try {
             for (let i = 0; i < userSeller.length; i++) {
               const sendWhatsApp = await axios.post(
-                "https://sendwhatsapp2.herokuapp.com/received",
+                // "https://sendwhatsapp2.herokuapp.com/received",
                 // "http://localhost:3001/received",
-                // "https://sendmessagewhatsapp.herokuapp.com/received",
+                "https://sendmessagewhatsapp.herokuapp.com/received",
                 {
                   body: {
-                    // from: "573128596420@c.us",
+                    from: "573128596420@c.us",
                     // body: "servicio solicitado",
-                    from: "57" + userSeller[i].phone + "@c.us",
+                    // from: "57" + userSeller[i].phone + "@c.us",
                     body: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}, en la siguiente dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos" https://calyaanwp.netlify.app`,
                   },
                 }
@@ -126,7 +126,7 @@ turnRouter.post(
                 payload
               );
               // res.status(200).json();
-              console.log('web push enviado')
+              console.log("web push enviado");
             }
           } catch (error) {
             console.log("The message was not sent by webpush");
@@ -171,10 +171,10 @@ turnRouter.put(
 
       try {
         const sendWhatsApp = await axios.post(
-          "https://sendwhatsapp2.herokuapp.com/received",
+          //"https://sendwhatsapp2.herokuapp.com/received",
 
           // "http://localhost:3001/received",
-          // "https://sendmessagewhatsapp.herokuapp.com/received",
+          "https://sendmessagewhatsapp.herokuapp.com/received",
           {
             body: {
               // from: "573128596420@c.us",
