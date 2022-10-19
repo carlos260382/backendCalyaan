@@ -12,6 +12,7 @@ const turnSchema = new mongoose.Schema(
     emailUser: { type: String, required: true },
     phoneUser: { type: String, required: true },
     address: { type: String, required: true },
+    neighborhood: { type: String, required: false },
     city: { type: String, required: false },
     postalCode: { type: String, required: false },
     country: { type: String, required: true },

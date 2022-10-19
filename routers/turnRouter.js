@@ -55,6 +55,7 @@ turnRouter.post(
           fullName,
           emailUser,
           phoneUser,
+          neighborhood,
         } = req.body;
         const turn = new Turn({
           day: day,
@@ -67,6 +68,7 @@ turnRouter.post(
           emailUser: emailUser,
           phoneUser: phoneUser,
           address: address,
+          neighborhood: neighborhood,
           city: city,
           postalCode: postalCode,
           country: country,
@@ -89,9 +91,9 @@ turnRouter.post(
           try {
             //for (let i = 0; i < userSeller.length; i++) {
             const sendWhatsApp = await axios.post(
-              // "https://sendwhatsapp2.herokuapp.com/received",
+              "https://sendwhatsapp2.herokuapp.com/received",
               // "http://localhost:3001/received",
-              "https://sendmessagewhatsapp.herokuapp.com/received",
+              //"https://sendmessagewhatsapp.herokuapp.com/received",
               {
                 body: {
                   from: "573128596420@c.us",
@@ -191,10 +193,10 @@ turnRouter.put(
 
       try {
         const sendWhatsApp = await axios.post(
-          //"https://sendwhatsapp2.herokuapp.com/received",
+          "https://sendwhatsapp2.herokuapp.com/received",
 
           // "http://localhost:3001/received",
-          "https://sendmessagewhatsapp.herokuapp.com/received",
+          //"https://sendmessagewhatsapp.herokuapp.com/received",
           {
             body: {
               // from: "573128596420@c.us",
