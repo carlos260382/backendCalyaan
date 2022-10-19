@@ -89,21 +89,21 @@ turnRouter.post(
           // ----------SEND WHATSAPP ------------
 
           try {
-            //for (let i = 0; i < userSeller.length; i++) {
-            const sendWhatsApp = await axios.post(
-              "https://sendwhatsapp2.herokuapp.com/received",
-              // "http://localhost:3001/received",
-              //"https://sendmessagewhatsapp.herokuapp.com/received",
-              {
-                body: {
-                  from: "573128596420@c.us",
-                  // body: "servicio solicitado",
-                  // from: "57" + userSeller[i].phone + "@c.us",
-                  body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
-                },
-              }
-            );
-            // }
+            for (let i = 0; i < userSeller.length; i++) {
+              const sendWhatsApp = await axios.post(
+                "https://sendwhatsapp2.herokuapp.com/received",
+                // "http://localhost:3001/received",
+                //"https://sendmessagewhatsapp.herokuapp.com/received",
+                {
+                  body: {
+                    // from: "573128596420@c.us",
+                    // body: "servicio solicitado",
+                    from: "57" + userSeller[i].phone + "@c.us",
+                    body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
+                  },
+                }
+              );
+            }
           } catch (error) {
             console.log("The message was not sent by whatsapp");
           }
