@@ -90,19 +90,23 @@ turnRouter.post(
 
           try {
             for (let i = 0; i < userSeller.length; i++) {
-              const sendWhatsApp = await axios.post(
-                "https://sendwhatsapp2.herokuapp.com/received",
-                // "http://localhost:3001/received",
-                //"https://sendmessagewhatsapp.herokuapp.com/received",
-                {
-                  body: {
-                    // from: "573128596420@c.us",
-                    // body: "servicio solicitado",
-                    from: "57" + userSeller[i].phone + "@c.us",
-                    body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
-                  },
-                }
-              );
+              if (userSeller[i].phone.length != 10) {
+                return;
+              } else {
+                const sendWhatsApp = await axios.post(
+                  "https://sendwhatsapp2.herokuapp.com/received",
+                  // "http://localhost:3001/received",
+                  //"https://sendmessagewhatsapp.herokuapp.com/received",
+                  {
+                    body: {
+                      // from: "573128596420@c.us",
+                      // body: "servicio solicitado",
+                      from: "57" + userSeller[i].phone + "@c.us",
+                      body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
+                    },
+                  }
+                );
+              }
             }
           } catch (error) {
             console.log("The message was not sent by whatsapp");
@@ -110,49 +114,41 @@ turnRouter.post(
 
           // *-------Envio Norificacion Push-----------
 
-          const payload = JSON.stringify({
-            title: "Servicio solicitado",
-            message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
-            vibrate: [100, 50, 100],
-          });
-          webpush.setVapidDetails(
-            "mailto:andres260382@gmail.com",
-            process.env.PUBLIC_API_KEY_WEBPUSH,
-            process.env.PRIVATE_API_KEY_WEBPUSH
-          );
+          // const payload = JSON.stringify({
+          //   title: "Servicio solicitado",
+          //   message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
+          //   vibrate: [100, 50, 100],
+          // });
+          // webpush.setVapidDetails(
+          //   "mailto:andres260382@gmail.com",
+          //   process.env.PUBLIC_API_KEY_WEBPUSH,
+          //   process.env.PRIVATE_API_KEY_WEBPUSH
+          // );
 
-          let count = 0;
-          while (count <= userSeller.length - 1) {
-            //for (let i = 0; i < userSeller.length; i++) {
+          // let count = 0;
+          // while (count <= userSeller.length - 1) {
 
-            // console.log("subscription", userSeller[count].subscription);
-
-            // console.log(
-            //   "objectKeys",
-            //   Object.keys(userSeller[count].subscription.endpoint).length
-            // );
-
-            if (
-              Object.keys(userSeller[count].subscription.endpoint).length === 1
-            ) {
-              count++;
-              continue;
-            } else {
-              try {
-                await webpush.sendNotification(
-                  userSeller[count].subscription,
-                  payload
-                );
-                // res.status(200).json();
-                console.log("web push enviado");
-                count++;
-              } catch (error) {
-                count++;
-                console.log("The message was not sent by webpush");
-                // res.status(400).send(error).json();
-              }
-            }
-          }
+          //   if (
+          //     Object.keys(userSeller[count].subscription.endpoint).length === 1
+          //   ) {
+          //     count++;
+          //     continue;
+          //   } else {
+          //     try {
+          //       await webpush.sendNotification(
+          //         userSeller[count].subscription,
+          //         payload
+          //       );
+          //       // res.status(200).json();
+          //       console.log("web push enviado");
+          //       count++;
+          //     } catch (error) {
+          //       count++;
+          //       console.log("The message was not sent by webpush");
+          //       // res.status(400).send(error).json();
+          //     }
+          //   }
+          // }
         }
       }
       //}
