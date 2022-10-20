@@ -166,7 +166,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
 
       try {
         const sendWhatsApp = await axios.post(
-          "https://botwhatsapp-production.up.railway.app/received",
+          "https://botwhatsapp4.herokuapp.com/received",
           // "https://sendwhatsapp2.herokuapp.com/received",
           // "http://localhost:3001/received",
           //"https://sendmessagewhatsapp.herokuapp.com/received",
