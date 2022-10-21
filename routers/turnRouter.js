@@ -116,41 +116,40 @@ turnRouter.post(
 
           // *-------Envio Norificacion Push-----------
 
-          // const payload = JSON.stringify({
-          //   title: "Servicio solicitado",
-          //   message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
-          //   vibrate: [100, 50, 100],
-          // });
-          // webpush.setVapidDetails(
-          //   "mailto:andres260382@gmail.com",
-          //   process.env.PUBLIC_API_KEY_WEBPUSH,
-          //   process.env.PRIVATE_API_KEY_WEBPUSH
-          // );
+          const payload = JSON.stringify({
+            title: "Servicio solicitado",
+            message: `acaban de solicitar el servicio ${turn.service[0].name}, ${turn.service[0].price}`,
+            vibrate: [100, 50, 100],
+          });
+          webpush.setVapidDetails(
+            "mailto:andres260382@gmail.com",
+            process.env.PUBLIC_API_KEY_WEBPUSH,
+            process.env.PRIVATE_API_KEY_WEBPUSH
+          );
 
-          // let count = 0;
-          // while (count <= userSeller.length - 1) {
-
-          //   if (
-          //     Object.keys(userSeller[count].subscription.endpoint).length === 1
-          //   ) {
-          //     count++;
-          //     continue;
-          //   } else {
-          //     try {
-          //       await webpush.sendNotification(
-          //         userSeller[count].subscription,
-          //         payload
-          //       );
-          //       // res.status(200).json();
-          //       console.log("web push enviado");
-          //       count++;
-          //     } catch (error) {
-          //       count++;
-          //       console.log("The message was not sent by webpush");
-          //       // res.status(400).send(error).json();
-          //     }
-          //   }
-          // }
+          let count = 0;
+          while (count <= userSeller.length - 1) {
+            if (
+              Object.keys(userSeller[count].subscription.endpoint).length === 1
+            ) {
+              count++;
+              continue;
+            } else {
+              try {
+                await webpush.sendNotification(
+                  userSeller[count].subscription,
+                  payload
+                );
+                // res.status(200).json();
+                console.log("web push enviado");
+                count++;
+              } catch (error) {
+                count++;
+                console.log("The message was not sent by webpush");
+                // res.status(400).send(error).json();
+              }
+            }
+          }
         }
       }
       //}
