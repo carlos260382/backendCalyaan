@@ -166,7 +166,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
 
       try {
         const sendWhatsApp = await axios.post(
-          "https://botwhatsapp4.herokuapp.com/received",
+          "http://44.201.159.167:3001/received",
           // "https://sendwhatsapp2.herokuapp.com/received",
           // "http://localhost:3001/received",
           //"https://sendmessagewhatsapp.herokuapp.com/received",
@@ -174,7 +174,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
             body: {
               // from: "573128596420@c.us",
               // body: "servicio solicitado",
-              from: "57" + seller.phone + "@c.us",
+              from: "57" + seller.phone,
               body: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}, recuerde marcarlo como realizado una vez finalice la actividad`,
             },
           }

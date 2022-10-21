@@ -94,17 +94,17 @@ turnRouter.post(
                 return;
               } else {
                 const sendWhatsApp = await axios.post(
-                  "https://botwhatsapp4.herokuapp.com/received",
+                  //"https://botwhatsapp4.herokuapp.com/received",
 
-                  //"https://sendwhatsapp2.herokuapp.com/received",
+                  "http://44.201.159.167:3001/received",
                   // "http://localhost:3001/received",
                   //"https://sendmessagewhatsapp.herokuapp.com/received",
                   {
                     body: {
                       // from: "573128596420@c.us",
                       // body: "servicio solicitado",
-                      from: "57" + userSeller[i].phone + "@c.us",
-                      body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co`,
+                      from: "57" + userSeller[i].phone,
+                      body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[0].name}, ${turn.service[0].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co (este es mensaje de prueba💻)`,
                     },
                   }
                 );
@@ -191,7 +191,7 @@ turnRouter.put(
 
       try {
         const sendWhatsApp = await axios.post(
-          "https://botwhatsapp4.herokuapp.com/received",
+          "http://44.201.159.167:3001/received",
           //"https://sendwhatsapp2.herokuapp.com/received",
           // "http://localhost:3001/received",
           //"https://sendmessagewhatsapp.herokuapp.com/received",
@@ -199,7 +199,7 @@ turnRouter.put(
             body: {
               // from: "573128596420@c.us",
               // body: "servicio solicitado",
-              from: "57" + turn.phoneUser + "@c.us",
+              from: "57" + turn.phoneUser,
               body: `¡Señor ${turn.fullName}, le informamos que ha sido aceptado el turno para su servicio, por el profesional ${req.body.Turn.name}, puede realizar el pago para finalizar el pedido`,
             },
           }
