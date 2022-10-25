@@ -190,7 +190,7 @@ orderRouter.put("/:id/pay", async (req, res) => {
         message: `Fue confirmado el servicio ${order.orderItems[0].name}, para el dia ${turn.day}, hora ${turn.hour}, en la direccion ${turn.address}, el codigo de seguridad para presentar al cliente es ${turn.keyCode}`,
         vibrate: [100, 50, 100],
       });
-      await webpush.setVapidDetails(
+      webpush.setVapidDetails(
         "mailto:andres260382@gmail.com",
         process.env.PUBLIC_API_KEY_WEBPUSH,
         process.env.PRIVATE_API_KEY_WEBPUSH

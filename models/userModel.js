@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
       name: String,
       logo: String,
       description: String,
+      category: [{ type: String, required: false }],
       rating: { type: Number, default: 0, required: true },
       numReviews: { type: Number, default: 0, required: true },
     },

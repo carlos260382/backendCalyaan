@@ -20,6 +20,7 @@ const turnSchema = new mongoose.Schema(
     service: [
       {
         name: { type: String, required: true },
+        category: { type: String, required: true },
         qty: { type: Number, required: true },
         price: { type: Number, required: true },
       },
