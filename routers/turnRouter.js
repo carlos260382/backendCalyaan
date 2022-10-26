@@ -93,75 +93,82 @@ turnRouter.post(
           });
           let count = 0;
           while (count <= userSeller.length - 1) {
+            console.log("categorys seller", userSeller[count].seller.category);
             // for (let i = 0; i < userSeller.length; i++) {
-            if (userSeller[count].phone.length != 10) {
-              count++;
-              continue;
-            } else {
-              for (let j = 0; j < turn.service.length; j++) {
-                if (
-                  userSeller[count].seller.category.includes(
-                    turn.service[j].category
-                  )
-                ) {
-                  // console.log(
-                  //   "se envia el mensaje whatsApp a",
-                  //   userSeller[count]
-                  // );
+            //    if (userSeller[count].phone.length != 10) {
+            //  count++;
+            //    continue;
+            //   } else {
+            for (let j = 0; j < turn.service.length; j++) {
+              if (
+                userSeller[count].seller.category.includes(
+                  turn.service[j].category
+                )
+              ) {
+                console.log(
+                  "se envia el mensaje whatsApp a",
+                  userSeller[count]
+                );
 
-                  // console.log(
-                  //   "subscriptio",
-                  //   Object.keys(userSeller[count].subscription.endpoint).length
-                  // );
-                  // ---------------SEND WHATSAPP ------------
-                  try {
-                    await axios.post(
-                      //"https://botwhatsapp4.herokuapp.com/received",
-                      "http://44.201.159.167:3001/received",
-                      // "http://localhost:3001/received",
+                console.log("turn Service", turn.service);
 
-                      {
-                        body: {
-                          // from: "573128596420@c.us",
-                          // body: "servicio solicitado",
-                          from: "57" + userSeller[count].phone,
-                          body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[j].name}, ${turn.service[j].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co (este es mensaje de prueba💻)`,
-                        },
-                      }
-                    );
-                  } catch (error) {
-                    console.log("The message was not sent by whatsapp");
-                  }
-                  webpush.setVapidDetails(
-                    "mailto:andres260382@gmail.com",
-                    process.env.PUBLIC_API_KEY_WEBPUSH,
-                    process.env.PRIVATE_API_KEY_WEBPUSH
-                  );
-                  if (
-                    Object.keys(userSeller[count].subscription.endpoint)
-                      .length === 1
-                  ) {
-                    count++;
-                    continue;
-                  } else {
-                    try {
-                      await webpush.sendNotification(
-                        userSeller[count].subscription,
-                        payload
-                      );
-                      // res.status(200).json();
-                      console.log("web push enviado");
-                      count++;
-                    } catch (error) {
-                      count++;
-                      console.log("The message was not sent by webpush");
-                      // res.status(400).send(error).json();
+                // console.log(
+                //   "subscriptio",
+                //   Object.keys(userSeller[count].subscription.endpoint).length
+                // );
+                // ---------------SEND WHATSAPP ------------
+                try {
+                  await axios.post(
+                    //"https://botwhatsapp4.herokuapp.com/received",
+                    "http://44.201.159.167:3001/received",
+                    // "http://localhost:3001/received",
+
+                    {
+                      body: {
+                        // from: "573128596420@c.us",
+                        // body: "servicio solicitado",
+                        from: "57" + userSeller[count].phone,
+                        body: `🚨 NUEVO SERVICIO 🚨 ${turn.service[j].name}, ${turn.service[j].price}, dirección ${turn.address}, para aceptar el servicio ingrese a la sesión "Turnos Pendientes" https://www.calyaan.com.co (este es mensaje de prueba💻)`,
+                      },
                     }
+                  );
+                  console.log(
+                    "mensaje enviado al numero",
+                    userSeller[count].phone
+                  );
+                } catch (error) {
+                  console.log("The message was not sent by whatsapp");
+                }
+                webpush.setVapidDetails(
+                  "mailto:andres260382@gmail.com",
+                  process.env.PUBLIC_API_KEY_WEBPUSH,
+                  process.env.PRIVATE_API_KEY_WEBPUSH
+                );
+                if (
+                  Object.keys(userSeller[count].subscription.endpoint)
+                    .length === 1
+                ) {
+                  count++;
+                  continue;
+                } else {
+                  try {
+                    await webpush.sendNotification(
+                      userSeller[count].subscription,
+                      payload
+                    );
+                    // res.status(200).json();
+                    console.log("web push enviado");
+                    count++;
+                  } catch (error) {
+                    count++;
+                    console.log("The message was not sent by webpush");
+                    // res.status(400).send(error).json();
                   }
                 }
               }
-              count++;
             }
+            count++;
+            //}
           }
 
           // *-------Envio Norificacion Push-----------
