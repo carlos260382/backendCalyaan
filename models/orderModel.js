@@ -25,6 +25,12 @@ const orderSchema = new mongoose.Schema(
       lat: Number,
       lng: Number,
     },
+    turn: {
+      day: { type: String, required: false },
+      hour: { type: String, required: false, unique: false },
+      keyCode: { type: Number, required: false },
+      status: { type: Boolean, default: false },
+    },
     paymentMethod: { type: String, required: true },
     paymentResult: {
       id: String,

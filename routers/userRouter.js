@@ -185,6 +185,21 @@ userRouter.get(
   })
 );
 
+userRouter.get(
+  "/professional",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    try {
+      const usersSeller = await User.find({ isSeller: true });
+      console.log("usuarios encontrados", usersSeller);
+      if (usersSeller) res.send(usersSeller);
+    } catch (error) {
+      console.log("error", error);
+    }
+  })
+);
+
 userRouter.delete(
   "/:id",
   isAuth,
