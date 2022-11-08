@@ -31,6 +31,19 @@ orderRouter.get(
 );
 
 orderRouter.get(
+  "/professional/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const { id } = req.params;
+    console.log("idseller", req);
+    const orders = await Order.find({ seller: id });
+    console.log("orders", orders);
+    res.send(orders);
+  })
+);
+
+orderRouter.get(
   "/summary",
   isAuth,
   isAdmin,
